@@ -1,0 +1,75 @@
+$colors: (
+  light: (
+    text: (
+      100: hsl(var(--h) var(--s) 10%),
+      //black
+      200: hsl(var(--h) var(--s) 15%),
+      //black
+      300: hsl(var(--h) var(--s) 40%),
+      //black
+    ),
+    surface: (
+      100: hsl(var(--h) var(--s) 50%),
+      //stroke
+      300: hsl(var(--h) var(--s) 90%),
+      //border
+      200: hsl(var(--h) var(--s) 95%),
+      //reset button
+    ),
+  ),
+  dark: (
+    text: (
+      300: hsl(var(--h) var(--s) 80%),
+      // off white
+      200: hsl(var(--h) var(--s) 85%),
+      //dull white
+      100: hsl(var(--h) var(--s) 90%),
+      //white
+    ),
+    surface: (
+      200: hsl(var(--h) var(--s) 16%),
+      //base
+      300: hsl(var(--h) var(--s) 19%),
+      //base 2
+      100: hsl(var(--h) var(--s) 50%),
+      //border
+    ),
+  ),
+);
+
+@mixin color-scheme($type: light) {
+  @each $prop, $value in map-get($colors, $type) {
+    @each $num, $val in $value {
+      --#{$prop}-#{$num}: #{$val};
+    }
+  }
+}
+:root {
+  --h: 0;
+  --s: 0%;
+  --regular: 400;
+  --medium: 500;
+
+  @include color-scheme(light);
+  ::-moz-selection {
+    color: black;
+    background: yellow;
+  }
+
+  ::selection {
+    color: black;
+    background: yellow;
+  }
+}
+[color-scheme="dark"] {
+  @include color-scheme(dark);
+}
+[color-scheme="light"] {
+  @include color-scheme(light);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include color-scheme(dark);
+  }
+}
